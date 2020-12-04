@@ -17,5 +17,12 @@ namespace Conways
     {
       return _grid.Clone() as T[,];
     }
+    public void SetMany(IEnumerable<RowColumn> indexes, value)
+    {
+      foreach (RowColumn index in indexes)
+      { 
+        this[index.Row, index.Column] = value;
+      }
+    }
   }
 }
