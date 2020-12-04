@@ -5,7 +5,6 @@ namespace Conways
 {
   public class ConsoleRenderer : IRender
   {
-
     public void Render(CellState[,] grid)
     {
       Console.WriteLine(VisualizeGridInConsole(grid));
@@ -30,7 +29,6 @@ namespace Conways
         seeSB.Append("\n");
       }
       return seeSB.ToString();
-
     }
   }
 }
