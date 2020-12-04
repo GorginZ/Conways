@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace Conways
 {
-  public class Grid<CellState>
+  public class World<CellState>
   {
     private CellState[,] _grid;
     public int RowDimension => _grid.GetLength(0);
     public int ColumnDimension => _grid.GetLength(1);
-    public Grid(int rowDimension, int colDimension)
+    public World(int rowDimension, int colDimension)
     {
       _grid = new CellState[rowDimension, colDimension];
     }
