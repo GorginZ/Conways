@@ -28,8 +28,8 @@ namespace Conways.Tests
     public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
     {
       var grid = new World(3, 3);
-      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(2, 2) }, CellState.Alive);
-      var expectedInitialGrid = "XX \n"
+      grid.SetMany(new HashSet<RowColumn> {new RowColumn(2, 2) }, CellState.Alive);
+      var expectedInitialGrid = "   \n"
                        + "   \n"
                        + "  X\n";
       Assert.Equal(expectedInitialGrid, ConsoleRenderer.VisualizeGridInConsole(grid.GridClone()));

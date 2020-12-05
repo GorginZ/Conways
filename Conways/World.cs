@@ -35,9 +35,7 @@ namespace Conways
       {
         for (int j = 0; j < (ColumnDimension -1); j++)
         {
-          var neighbours = NeighbourHood.GetNeighbourIndexes(i,j, (RowDimension -1), (ColumnDimension - 1));
-          int liveCount = neighbours.Where(IsLive).Count();
-          // int liveCount = NeighbourHood.GetNeighbourIndexes(i, j, this.RowDimension, this.ColumnDimension).Where(IsLive).Count();
+          int liveCount = NeighbourHood.GetNeighbourIndexes(i, j, this.RowDimension, this.ColumnDimension).Where(IsLive).Count();
 
           var thisCell = new RowColumn(i, j);
 
