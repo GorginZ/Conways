@@ -39,11 +39,7 @@ namespace Conways
 
           var thisCell = new RowColumn(i, j);
 
-          if (IsLive(thisCell) && liveCount == 2 || liveCount == 3)
-          {
-            toAlive.Add(thisCell);
-          }
-          if (liveCount == 3)
+          if (liveCount == 3 || IsLive(thisCell) && liveCount == 2 || liveCount == 3)
           {
             toAlive.Add(thisCell);
           }
