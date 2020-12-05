@@ -31,6 +31,9 @@ namespace Conways.Tests
       Assert.False(grid.IsLive((0, 0)));
 
     }
+    // acceptable range for live cell 2-3
+    // any with 3 lives
+
     // [Fact]
     // public void AnyLiveCellWithMoreThanThreeLiveNeighboursDies()
     // {
