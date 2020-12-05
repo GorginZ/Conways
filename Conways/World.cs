@@ -13,16 +13,12 @@ namespace Conways
     {
       _grid = new CellState[rowDimension, colDimension];
     }
-    public CellState[,] GridClone()
+    public CellState[,] GridClone() => _grid.Clone() as CellState[,];
+    public void SetMany(IEnumerable<(int,int)> indexes, CellState value)
     {
-      return _grid.Clone() as CellState[,];
+      foreach ((int,int) index in indexes)
+        _grid[index.Item1, index.Item2] = value;
     }
-    public void SetMany(IEnumerable<RowColumn> indexes, CellState value)
-    {
-      foreach (RowColumn index in indexes)
-        _grid[index.Row, index.Column] = value;
-    }
-    public bool IsLive(RowColumn index) => _grid[index.Row, index.Column].Equals(Conways.CellState.Alive);
-
+    public bool IsLive((int,int) index) => _grid[index.Item1, index.Item2].Equals(Conways.CellState.Alive);
   }
 }
