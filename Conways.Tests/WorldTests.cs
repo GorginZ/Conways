@@ -16,16 +16,16 @@ namespace Conways.Tests
     [Fact]
     public void CanSetCellsAlive()
     {
-      var grid = new World(3, 4);
+      var grid = new World(3, 4, new HashSet<RowColumn> { new RowColumn(0, 0) }
+      );
       Assert.False(grid.IsLive(new RowColumn(0, 0)));
-      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0) }, CellState.Alive);
       Assert.True(grid.IsLive(new RowColumn(0, 0)));
     }
     [Fact]
     public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
     {
       var grid = new World(3, 3);
-      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0) }, CellState.Alive);
+      { new RowColumn(0, 0) }, CellState.Alive);
       Assert.True(grid.IsLive(new RowColumn(0, 0)));
       grid.Tick();
       Assert.False(grid.IsLive(new RowColumn(0, 0)));
@@ -35,7 +35,7 @@ namespace Conways.Tests
     public void AnyLiveCellWithMoreThanThreeLiveNeighboursDies()
     {
       var grid = new World(3, 3);
-      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0), new RowColumn(1, 1), new RowColumn(0,2) }, CellState.Alive);
+      { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0), new RowColumn(1, 1), new RowColumn(0, 2) }, CellState.Alive);
       Assert.True(grid.IsLive(new RowColumn(0, 0)));
       grid.Tick();
       Assert.False(grid.IsLive(new RowColumn(0, 0)));
@@ -44,7 +44,7 @@ namespace Conways.Tests
     public void AnyLiveCellWithThreeLiveNeighboursLives()
     {
       var grid = new World(3, 3);
-      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0), new RowColumn(1, 1) }, CellState.Alive);
+      { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0), new RowColumn(1, 1) }, CellState.Alive);
       Assert.True(grid.IsLive(new RowColumn(0, 0)));
       grid.Tick();
       Assert.True(grid.IsLive(new RowColumn(0, 0)));
@@ -54,17 +54,17 @@ namespace Conways.Tests
     public void AnyLiveCellWithTwoLiveNeighboursLives()
     {
       var grid = new World(3, 3);
-      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0)}, CellState.Alive);
+      { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0)}, CellState.Alive);
       Assert.True(grid.IsLive(new RowColumn(0, 0)));
       grid.Tick();
       Assert.True(grid.IsLive(new RowColumn(0, 0)));
     }
-    
+
     [Fact]
     public void AnyDeadCellWithExactlyThreeLiveNeighboursBecomesALiveCell()
     {
       var grid = new World(3, 3);
-      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0)}, CellState.Alive);
+      { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0)}, CellState.Alive);
       Assert.False(grid.IsLive(new RowColumn(1, 1)));
       grid.Tick();
       Assert.True(grid.IsLive(new RowColumn(1, 1)));
