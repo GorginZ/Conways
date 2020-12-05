@@ -7,7 +7,7 @@ namespace Conways.Tests
     [Fact]
     public void CanVisualizeCurrentCopyOfGrid()
     {
-      var grid = new World(4, 5);
+      var grid = new World(4, 5, new HashSet<RowColumn>());
       var expectedGrid = "     \n"
                        + "     \n"
                        + "     \n"
@@ -17,8 +17,7 @@ namespace Conways.Tests
     [Fact]
     public void CanSetAnInitialState()
     {
-      var grid = new World(3, 4);
-      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(0, 2) }, CellState.Alive);
+      var grid = new World(3, 4, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(0, 2) });
       var expectedGrid = "XXX \n"
                        + "    \n"
                        + "    \n";
@@ -27,8 +26,7 @@ namespace Conways.Tests
     [Fact]
     public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
     {
-      var grid = new World(3, 3);
-      grid.SetMany(new HashSet<RowColumn> {new RowColumn(2, 2) }, CellState.Alive);
+      var grid = new World(3, 3, new HashSet<RowColumn> {new RowColumn(2, 2) });
       var expectedInitialGrid = "   \n"
                        + "   \n"
                        + "  X\n";

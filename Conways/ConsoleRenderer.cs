@@ -7,6 +7,7 @@ namespace Conways
   {
     public void Render(CellState[,] grid)
     {
+      Console.Clear();
       Console.WriteLine(VisualizeGridInConsole(grid));
     }
     public static string VisualizeGridInConsole(CellState[,] grid)
