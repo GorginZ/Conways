@@ -8,10 +8,9 @@ namespace Conways.Tests
     [Fact]
     public void CanReturnIndexNeighbourhood()
     {
-      var dimensions = (5, 5);
-      var index = (0, 0);
-      var neighbourHood = NeighbourHood.GetNeighbourhoodIndexes(index, dimensions);
-      Assert.Equal(new List<(int,int)> { (0, 1), (0, 4), (4, 0), (1, 0), (4, 1), (4, 4), (1, 1), (1, 4)}, neighbourHood);
+      var neighbourHood = NeighbourHood.GetNeighbourIndexes(0, 0, 5, 5);
+      var expectedNeighbours = new HashSet<RowColumn> { new RowColumn(0, 1), new RowColumn(0, 4), new RowColumn(4, 0), new RowColumn(1, 0), new RowColumn(4, 1), new RowColumn(4, 4), new RowColumn(1, 1), new RowColumn(1, 4) };
+      Assert.True(expectedNeighbours.SetEquals(neighbourHood));
     }
   }
 }

@@ -17,19 +17,18 @@ namespace Conways.Tests
     public void CanSetCellsAlive()
     {
       var grid = new World(3, 4);
-      Assert.False(grid.IsLive((0, 0)));
-      grid.SetMany(new HashSet<(int, int)> { (0, 0) }, CellState.Alive);
-      Assert.True(grid.IsLive((0, 0)));
+      Assert.False(grid.IsLive(new RowColumn(0, 0)));
+      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0) }, CellState.Alive);
+      Assert.True(grid.IsLive(new RowColumn(0, 0)));
     }
     [Fact]
     public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
     {
       var grid = new World(3, 3);
-      grid.SetMany(new HashSet<(int, int)> { (0, 0) }, CellState.Alive);
-      Assert.True(grid.IsLive((0, 0)));
+      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0) }, CellState.Alive);
+      Assert.True(grid.IsLive(new RowColumn(0, 0)));
       grid.Tick();
-      Assert.False(grid.IsLive((0, 0)));
-
+      Assert.False(grid.IsLive(new RowColumn(0, 0)));
     }
     // acceptable range for live cell 2-3
     // any with 3 lives

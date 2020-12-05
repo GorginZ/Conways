@@ -14,12 +14,12 @@ namespace Conways
       _grid = new CellState[rowDimension, colDimension];
     }
     public CellState[,] GridClone() => _grid.Clone() as CellState[,];
-    public void SetMany(IEnumerable<(int, int)> indexes, CellState value)
+    public void SetMany(IEnumerable<RowColumn> indexes, CellState value)
     {
-      foreach ((int, int) index in indexes)
-        _grid[index.Item1, index.Item2] = value;
+      foreach (RowColumn index in indexes)
+        _grid[index.Row, index.Column] = value;
     }
-    public bool IsLive((int, int) index) => _grid[index.Item1, index.Item2].Equals(CellState.Alive);
+    public bool IsLive(RowColumn index) => _grid[index.Row, index.Column].Equals(CellState.Alive);
     public void Tick()
     {
       var toAlive = CellsToAlive();
@@ -27,23 +27,25 @@ namespace Conways
       SetMany(toAlive, CellState.Alive);
 
     }
-    public IEnumerable<(int, int)> CellsToAlive()
+    public IEnumerable<RowColumn> CellsToAlive()
     {
-      var toAlive = new HashSet<(int, int)>();
+      var toAlive = new HashSet<RowColumn>();
 
       for (int i = 0; i < this.RowDimension - 1; i++)
       {
         for (int j = 0; i < this.ColumnDimension - 1; j++)
         {
-          int liveCount = NeighbourHood.GetNeighbourhoodIndexes((i, j), (this.RowDimension -1, this.ColumnDimension -1)).Where(IsLive).Count();
+          int liveCount = NeighbourHood.GetNeighbourIndexes(i, j, this.RowDimension, this.ColumnDimension).Where(IsLive).Count();
 
-          if (IsLive((i, j)) && liveCount == 2 || liveCount == 3)
+          var thisCell = new RowColumn(i, j);
+
+          if (IsLive(thisCell) && liveCount == 2 || liveCount == 3)
           {
-            toAlive.Append((i, j));
+            toAlive.Add(thisCell);
           }
           if (liveCount == 3)
           {
-            toAlive.Add((i, j));
+            toAlive.Add(thisCell);
           }
         }
       }

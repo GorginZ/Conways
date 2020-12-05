@@ -18,7 +18,7 @@ namespace Conways.Tests
     public void CanSetAnInitialState()
     {
       var grid = new World(3, 4);
-      grid.SetMany(new HashSet<(int, int)> { (0, 0), (0, 1), (0, 2) }, CellState.Alive);
+      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(0, 2) }, CellState.Alive);
       var expectedGrid = "XXX \n"
                        + "    \n"
                        + "    \n";
@@ -28,7 +28,7 @@ namespace Conways.Tests
     public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
     {
       var grid = new World(3, 3);
-      grid.SetMany(new HashSet<(int, int)> { (0, 0), (0, 1), (2, 2) }, CellState.Alive);
+      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(2, 2) }, CellState.Alive);
       var expectedInitialGrid = "XX \n"
                        + "   \n"
                        + "  X\n";
