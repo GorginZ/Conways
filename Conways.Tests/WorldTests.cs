@@ -30,8 +30,6 @@ namespace Conways.Tests
       grid.Tick();
       Assert.False(grid.IsLive(new RowColumn(0, 0)));
     }
-    // acceptable range for live cell 2-3
-    // any with 3 lives
 
     [Fact]
     public void AnyLiveCellWithMoreThanThreeLiveNeighboursDies()
@@ -42,16 +40,34 @@ namespace Conways.Tests
       grid.Tick();
       Assert.False(grid.IsLive(new RowColumn(0, 0)));
     }
-    // [Fact]
-    // public void AnyLiveCellWithTwoOrThreeLiveNeighboursLives()
-    // {
+    [Fact]
+    public void AnyLiveCellWithThreeLiveNeighboursLives()
+    {
+      var grid = new World(3, 3);
+      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0), new RowColumn(1, 1) }, CellState.Alive);
+      Assert.True(grid.IsLive(new RowColumn(0, 0)));
+      grid.Tick();
+      Assert.True(grid.IsLive(new RowColumn(0, 0)));
 
-    // }
-    // [Fact]
-    // public void AnyDeadCellWithExactlyThreeLiveNeighboursBecomesALiveCell()
-    // {
-
-    // }
-
+    }
+    [Fact]
+    public void AnyLiveCellWithTwoLiveNeighboursLives()
+    {
+      var grid = new World(3, 3);
+      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0)}, CellState.Alive);
+      Assert.True(grid.IsLive(new RowColumn(0, 0)));
+      grid.Tick();
+      Assert.True(grid.IsLive(new RowColumn(0, 0)));
+    }
+    
+    [Fact]
+    public void AnyDeadCellWithExactlyThreeLiveNeighboursBecomesALiveCell()
+    {
+      var grid = new World(3, 3);
+      grid.SetMany(new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0)}, CellState.Alive);
+      Assert.False(grid.IsLive(new RowColumn(1, 1)));
+      grid.Tick();
+      Assert.True(grid.IsLive(new RowColumn(1, 1)));
+    }
   }
 }
