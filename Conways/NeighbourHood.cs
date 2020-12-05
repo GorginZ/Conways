@@ -16,5 +16,6 @@ namespace Conways
         };
       return neighbourHood;
     }
+
   }
 }

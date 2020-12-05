@@ -23,6 +23,7 @@ namespace Conways
     public void Tick()
     {
       var toAlive = CellsToAlive();
+      _grid = new CellState[RowDimension, ColumnDimension];
       SetMany(toAlive, CellState.Alive);
 
     }
@@ -30,11 +31,11 @@ namespace Conways
     {
       var toAlive = new HashSet<(int, int)>();
 
-      for (int i = 0; i < this.RowDimension; i++)
+      for (int i = 0; i < this.RowDimension - 1; i++)
       {
-        for (int j = 0; i < this.ColumnDimension; j++)
+        for (int j = 0; i < this.ColumnDimension - 1; j++)
         {
-          int liveCount = NeighbourHood.GetNeighbourhoodIndexes((i, j), (this.RowDimension, this.ColumnDimension)).Where(IsLive).Count();
+          int liveCount = NeighbourHood.GetNeighbourhoodIndexes((i, j), (this.RowDimension -1, this.ColumnDimension -1)).Where(IsLive).Count();
 
           if (IsLive((i, j)) && liveCount == 2 || liveCount == 3)
           {
