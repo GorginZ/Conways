@@ -3,16 +3,16 @@ namespace Conways
 {
   public static class NeighbourHood
   {
-    public static IEnumerable<(int, int)> GetNeighbourhoodIndexes((int row, int column) index, (int rowDim, int colDim) dimensions)
+    public static IEnumerable<RowColumn> GetNeighbourIndexes(int row, int column, int rowDim, int colDim)
     {
-      var left = index.column == 0 ? (dimensions.colDim - 1) : (index.column - 1);
-      var right = index.column == (dimensions.colDim - 1) ? (0) : (index.column + 1);
-      var up = index.row == 0 ? (dimensions.rowDim - 1) : (index.row - 1);
-      var down = index.row == (dimensions.rowDim - 1) ? (0) : (index.row + 1);
+      var left = column == 0 ? (colDim - 1) : (column - 1);
+      var right = column == (colDim - 1) ? (0) : (column + 1);
+      var up = row == 0 ? (rowDim - 1) : (row - 1);
+      var down = row == (rowDim - 1) ? (0) : (row + 1);
 
-      var neighbourHood = new List<(int, int)>
+      var neighbourHood = new HashSet<RowColumn>
       {
-        (index.row, right), (index.row, left), (up, index.column),(down, index.column), (up, right), (up, left), (down, right), (down, left)
+        new RowColumn(row, right), new RowColumn(row, left), new RowColumn(up, column), new RowColumn(down, column), new RowColumn(up, right), new RowColumn(up, left), new RowColumn(down, right), new RowColumn(down, left)
         };
       return neighbourHood;
     }
