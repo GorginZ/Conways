@@ -21,5 +21,31 @@ namespace Conways.Tests
       grid.SetMany(new HashSet<(int, int)> { (0, 0) }, CellState.Alive);
       Assert.True(grid.IsLive((0, 0)));
     }
+    [Fact]
+    public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
+    {
+      var grid = new World<CellState>(3, 3);
+      grid.SetMany(new HashSet<(int, int)> { (0, 0) }, CellState.Alive);
+      Assert.True(grid.IsLive((0, 0)));
+      grid.Tick();
+      Assert.False(grid.IsLive((0, 0)));
+
+    }
+    // [Fact]
+    // public void AnyLiveCellWithMoreThanThreeLiveNeighboursDies()
+    // {
+
+    // }
+    // [Fact]
+    // public void AnyLiveCellWithTwoOrThreeLiveNeighboursLives()
+    // {
+
+    // }
+    // [Fact]
+    // public void AnyDeadCellWithExactlyThreeLiveNeighboursBecomesALiveCell()
+    // {
+
+    // }
+
   }
 }

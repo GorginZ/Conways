@@ -20,5 +20,9 @@ namespace Conways
         _grid[index.Item1, index.Item2] = value;
     }
     public bool IsLive((int,int) index) => _grid[index.Item1, index.Item2].Equals(Conways.CellState.Alive);
+    public void Tick()
+    {
+
+    }
   }
 }
