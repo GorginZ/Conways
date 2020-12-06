@@ -4,7 +4,6 @@ namespace Conways.Tests
 {
   public class NeighbourHoodTests
   {
-
     [Fact]
     public void CanReturnIndexNeighbourhood()
     {
