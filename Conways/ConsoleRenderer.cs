@@ -8,12 +8,11 @@ namespace Conways
     public void Render(CellState[,] grid)
     {
       Console.Clear();
-      Console.WriteLine(VisualizeGridInConsole(grid));
+      Console.WriteLine(GridAsString(grid));
     }
-    public static string VisualizeGridInConsole(CellState[,] grid)
+    public static string GridAsString(CellState[,] grid)
     {
       var seeSB = new StringBuilder();
-
       for (int i = 0; i < grid.GetLength(0); i++)
       {
         for (int j = 0; j < grid.GetLength(1); j++)
