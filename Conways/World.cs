@@ -26,6 +26,7 @@ namespace Conways
       foreach (RowColumn index in indexes)
         _grid[index.Row, index.Column] = value;
     }
+    //this inner loop may have performance issues but this is a simple way to apply the rules in 'one place'
     public bool IsLive(RowColumn index) => _grid[index.Row, index.Column].Equals(CellState.Alive);
     private IEnumerable<RowColumn> CellsToAlive()
     {
