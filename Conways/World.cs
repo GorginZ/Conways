@@ -30,15 +30,12 @@ namespace Conways
     private IEnumerable<RowColumn> CellsToAlive()
     {
       var toAlive = new HashSet<RowColumn>();
-
       for (int i = 0; i < (RowDimension -1); i++)
       {
         for (int j = 0; j < (ColumnDimension -1); j++)
         {
           int liveCount = NeighbourHood.GetNeighbourIndexes(i, j, this.RowDimension, this.ColumnDimension).Where(IsLive).Count();
-
           var thisCell = new RowColumn(i, j);
-
           if (liveCount == 3 || IsLive(thisCell) && liveCount == 2 || liveCount == 3)
           {
             toAlive.Add(thisCell);
