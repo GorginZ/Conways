@@ -31,6 +31,18 @@ namespace Conways.Tests
                                   + "          \n"
                                   + "          \n";
               Assert.Equal(expectedSecondIteration, ConsoleRenderer.VisualizeGridInConsole(world.GridClone()));
+              world.Tick();
+      var expectedThirdIteration =  "          \n"
+                                  + "X X       \n"
+                                  + " XX       \n"
+                                  + " X        \n"
+                                  + "          \n"
+                                  + "          \n"
+                                  + "          \n"
+                                  + "          \n"
+                                  + "          \n"
+                                  + "          \n";
+              Assert.Equal(expectedThirdIteration, ConsoleRenderer.VisualizeGridInConsole(world.GridClone()));
 
     }
   }
