@@ -5,6 +5,35 @@ namespace Conways.Tests
   public class AcceptanceTests
   {
     [Fact]
+    public void Wraps()
+    {
+      var world = new World(5, 5, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(0, 2) });
+      var expectedFirstIteration = "XXX  \n"
+                                 + "     \n"
+                                 + "     \n"
+                                 + "     \n"
+                                 + "     \n";
+
+      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+
+      world.Tick();
+
+      var expectedSecondIteration = " X   \n"
+                                 + " X   \n"
+                                 + "     \n"
+                                 + "     \n"
+                                 + " X   \n";
+      Assert.True(world.IsLive(new RowColumn(4, 1)));
+
+
+      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+
+      world.Tick();
+
+      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+    }
+
+    [Fact]
     public void CanProduceBlinkerWhenNotOnEdgeOfGrid()
     {
       var world = new World(5, 5, new HashSet<RowColumn> { new RowColumn(1, 2), new RowColumn(2, 2), new RowColumn(3, 2) });
@@ -17,6 +46,7 @@ namespace Conways.Tests
       Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
 
       world.Tick();
+
       var expectedSecondIteration = "     \n"
                                  + "     \n"
                                  + " XXX \n"
@@ -26,24 +56,8 @@ namespace Conways.Tests
       Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(world.GridClone()));
 
       world.Tick();
+
       Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
-    }
-    [Fact]
-    public void AppliesWrappingRulesAll3ShouldBeConsideredToHave2NeighboursAnd10ConsideredHaving3()
-    {
-      var world = new World(3, 3, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(0, 2) });
-
-      var expectedFirstIteration = "XXX\n"
-                                 + "   \n"
-                                 + "   \n";
-      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
-
-      world.Tick();
-
-      var expectedSecondIteration = "XX \n"
-                                  + "XX \n"
-                                  + "   \n";
-      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(world.GridClone()));
     }
     [Fact]
     public void ReproducesGlider()
