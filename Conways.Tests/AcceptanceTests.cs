@@ -5,7 +5,7 @@ namespace Conways.Tests
   public class AcceptanceTests
   {
     [Fact]
-    public void Blinker()
+    public void CanProduceBlinkerWhenNotOnEdgeOfGrid()
     {
       var world = new World(5, 5, new HashSet<RowColumn> { new RowColumn(1, 2), new RowColumn(2, 2), new RowColumn(3, 2) });
       var expectedFirstIteration = "     \n"
@@ -29,7 +29,7 @@ namespace Conways.Tests
       Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
     }
     [Fact]
-    public void Wraps()
+    public void AppliesWrappingRulesAll3ShouldBeConsideredToHave2NeighboursAnd10ConsideredHaving3()
     {
       var world = new World(3, 3, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(0, 2) });
 

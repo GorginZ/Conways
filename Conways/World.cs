@@ -26,7 +26,6 @@ namespace Conways
       foreach (RowColumn index in indexes)
         _grid[index.Row, index.Column] = value;
     }
-    //this inner loop may have performance issues but this is a simple way to apply the rules in 'one place'
     public bool IsLive(RowColumn index) => _grid[index.Row, index.Column].Equals(CellState.Alive);
     private IEnumerable<RowColumn> CellsToAlive()
     {
@@ -37,7 +36,7 @@ namespace Conways
         {
           int liveCount = NeighbourHood.GetNeighbourIndexes(i, j, this.RowDimension, this.ColumnDimension).Where(IsLive).Count();
           var thisCell = new RowColumn(i, j);
-          if (liveCount == 3 || IsLive(thisCell) && liveCount == 2 || liveCount == 3)
+          if (liveCount == 3 || IsLive(thisCell) && liveCount == 2)
           {
             toAlive.Add(thisCell);
           }

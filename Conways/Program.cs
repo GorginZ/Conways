@@ -7,8 +7,10 @@ namespace Conways
   {
     static void Main(string[] args)
     {
-      var indexes = new HashSet<RowColumn>{new RowColumn(3,3), new RowColumn(3,4), new RowColumn(3,5)};
-      var world = new World(10, 10, indexes);
+      var userInput = new ConsoleInput();
+      var dimensions = userInput.GetDimensions();
+      var indexes = userInput.GetStartingState(dimensions);
+      var world = new World(dimensions.Item1, dimensions.Item2, indexes);
       var renderer = new ConsoleRenderer();
       Simulation.Run(renderer, world);
     }

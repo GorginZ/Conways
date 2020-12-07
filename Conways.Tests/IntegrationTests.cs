@@ -42,7 +42,7 @@ namespace Conways.Tests
     }
 
     [Fact]
-    public void AnyLiveCellWithMoreThanThreeLiveNeighboursDies()
+    public void VisualAnyLiveCellWithMoreThanThreeLiveNeighboursDies()
     {
       var grid = new World(3, 3, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0), new RowColumn(1, 1), new RowColumn(0, 2) });
       var expectedInitialGrid = "XXX\n"
@@ -58,7 +58,7 @@ namespace Conways.Tests
 
     }
     [Fact]
-    public void AnyLiveCellWithThreeLiveNeighboursLives()
+    public void VisualAnyLiveCellWithThreeLiveNeighboursLives()
     {
       var grid = new World(3, 3, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0), new RowColumn(1, 1) });
       var expectedInitialGrid = "XX \n"
@@ -70,7 +70,7 @@ namespace Conways.Tests
 
     }
     [Fact]
-    public void AnyLiveCellWithTwoLiveNeighboursLivesAndADeadCellWithExactlyThreeLiveNeighboursBecomesLive()
+    public void VisualAnyLiveCellWithTwoLiveNeighboursLivesAndADeadCellWithExactlyThreeLiveNeighboursBecomesLive()
     //unless I want to use larger sized grids I'm going to end up exhibiting all rules in almost every visual test so i combined these. Alternative is more tests and larger grids.
     {
       var grid = new World(3, 3, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0) });
