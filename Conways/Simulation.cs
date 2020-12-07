@@ -2,7 +2,7 @@ using System.Threading;
 
 namespace Conways
 {
-  public class Simulation
+  public static class Simulation
   {
     public static void Run(IRender renderer, World world)
     {
