@@ -12,8 +12,6 @@ namespace Conways
     }
     public bool Equals(RowColumn other) => (Row, Column).Equals(other);
 
-    // public override bool Equals(object obj) => (Row, Column).Equals(obj);
-
     public override bool Equals(object obj)
     {
       if (!(obj is RowColumn rowCol))

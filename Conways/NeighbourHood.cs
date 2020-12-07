@@ -7,6 +7,7 @@ namespace Conways
     {
       var row = index.Row;
       var column = index.Column;
+
       var left = column == 0 ? (colDim - 1) : (column - 1);
       var right = column == (colDim - 1) ? (0) : (column + 1);
       var up = row == 0 ? (rowDim - 1) : (row - 1);
