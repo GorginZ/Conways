@@ -44,7 +44,6 @@ namespace Conways.Tests
       Assert.True(grid.IsLive(new RowColumn(0, 0)));
       grid.Tick();
       Assert.True(grid.IsLive(new RowColumn(0, 0)));
-
     }
     [Fact]
     public void AnyLiveCellWithTwoLiveNeighboursLives()

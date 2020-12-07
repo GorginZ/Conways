@@ -36,7 +36,7 @@ namespace Conways
         {
           int liveCount = NeighbourHood.GetNeighbourIndexes(i, j, this.RowDimension, this.ColumnDimension).Where(IsLive).Count();
           var thisCell = new RowColumn(i, j);
-          if (liveCount == 3 || IsLive(thisCell) && liveCount == 2 || liveCount == 3)
+          if (liveCount == 3 || IsLive(thisCell) && liveCount == 2)
           {
             toAlive.Add(thisCell);
           }
