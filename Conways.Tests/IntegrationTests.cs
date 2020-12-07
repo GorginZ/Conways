@@ -70,8 +70,7 @@ namespace Conways.Tests
 
     }
     [Fact]
-    public void VisualAnyLiveCellWithTwoLiveNeighboursLivesAndADeadCellWithExactlyThreeLiveNeighboursBecomesLive()
-    //unless I want to use larger sized grids I'm going to end up exhibiting all rules in almost every visual test so i combined these. Alternative is more tests and larger grids.
+    public void VisualAnyLiveCellWithTwoLiveNeighboursLivesAndADeadCellWithExactlyThreeLiveNeighboursBecomesLiveWithWrapping()
     {
       var grid = new World(3, 3, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0) });
       var expectedInitialGrid = "XX \n"
@@ -79,9 +78,9 @@ namespace Conways.Tests
                               + "   \n";
       Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.GridClone()));
       grid.Tick();
-      var expectedSecondIteration = "XX \n"
-                              + "XX \n"
-                              + "   \n";
+      var expectedSecondIteration = "XXX\n"
+                              + "XXX\n"
+                              + "XXX\n";
       Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(grid.GridClone()));
     }
 

@@ -1,8 +1,8 @@
 namespace Conways
 {
-public enum CellState
-{
-  Dead,
-  Alive
-} 
+  public enum CellState
+  {
+    Dead,
+    Alive
+  }
 }
