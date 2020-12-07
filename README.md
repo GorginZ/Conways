@@ -104,7 +104,11 @@ It's single responsability is to run the simulation, similarly it should not nee
 
 #### Decoupling
 
-I have done my best to keep my classes designed such that all of their dependencies are handed to them
+I have done my best to keep my classes designed such that all of their dependencies are handed to them.
+
+My world is dependent on the neighbourhood's static GetNeighbourhod function, which is a design decision I am unsure about and want more opinions on. I understand when we write programs we are writing systems and sometimes depenencies are part of that and not necessarily bad - in this instance from a decoupling perspective it may be desirable to put this function on the world class itself - but the dependency isn't a particularly risky one, the neighbourhood class isn't a complex object that may fail - it's an abstraction to help make my code more testable and readable and a side effect of my TDD approach, so it stays for now.
+
+
 
 removing dependencies on console
 
