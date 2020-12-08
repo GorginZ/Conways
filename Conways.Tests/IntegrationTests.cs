@@ -12,7 +12,7 @@ namespace Conways.Tests
                        + "     \n"
                        + "     \n"
                        + "     \n";
-      Assert.Equal(expectedGrid, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
     }
     [Fact]
     public void CanSetAnInitialState()
@@ -21,7 +21,7 @@ namespace Conways.Tests
       var expectedGrid = "XXX \n"
                        + "    \n"
                        + "    \n";
-      Assert.Equal(expectedGrid, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
     }
     [Fact]
     public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
@@ -30,14 +30,14 @@ namespace Conways.Tests
       var expectedInitialGrid = "   \n"
                        + "   \n"
                        + "  X\n";
-      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
 
       grid.Tick();
 
       var expectedPostTickGrid = "   \n"
                        + "   \n"
                        + "   \n";
-      Assert.Equal(expectedPostTickGrid, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedPostTickGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
 
     }
 
@@ -48,13 +48,13 @@ namespace Conways.Tests
       var expectedInitialGrid = "XXX\n"
                              + "XX \n"
                              + "   \n";
-      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
       grid.Tick();
       var expectedSecondIteration = "   \n"
                                   + "   \n"
                                    + "   \n";
 
-      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(grid.CloneGrid()));
 
     }
     [Fact]
@@ -64,9 +64,9 @@ namespace Conways.Tests
       var expectedInitialGrid = "XX \n"
                               + "XX \n"
                               + "   \n";
-      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
       grid.Tick();
-      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
 
     }
     [Fact]
@@ -76,12 +76,12 @@ namespace Conways.Tests
       var expectedInitialGrid = "XX \n"
                               + "X  \n"
                               + "   \n";
-      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
       grid.Tick();
       var expectedSecondIteration = "XXX\n"
                               + "XXX\n"
                               + "XXX\n";
-      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(grid.GridClone()));
+      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(grid.CloneGrid()));
     }
 
   }
