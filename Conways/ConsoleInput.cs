@@ -26,9 +26,9 @@ namespace Conways
       }
     }
 
-    public IEnumerable<RowColumn> GetStartingState((int rowCount, int colCount) dimensions)
+    public IEnumerable<(int,int)> GetStartingState((int rowCount, int colCount) dimensions)
     {
-      var indexList = new HashSet<RowColumn>();
+      var indexList = new HashSet<(int,int)>();
 
       while (true)
       {
@@ -41,7 +41,7 @@ namespace Conways
           var colTryParse = int.TryParse(index[2].ToString(), out int column);
           if (rowTryParse && colTryParse && row <= dimensions.rowCount - 1 && column <= dimensions.colCount - 1)
           {
-            indexList.Add(new RowColumn(row, column));
+            indexList.Add((row, column));
           }
         }
         return indexList;

@@ -7,7 +7,7 @@ namespace Conways.Tests
     [Fact]
     public void CanVisualizeCurrentCopyOfGrid()
     {
-      var grid = new World(4, 5, new HashSet<RowColumn>());
+      var grid = new World(4, 5, new HashSet<(int, int)>());
       var expectedGrid = "     \n"
                        + "     \n"
                        + "     \n"
@@ -17,7 +17,7 @@ namespace Conways.Tests
     [Fact]
     public void CanSetAnInitialState()
     {
-      var grid = new World(3, 4, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(0, 2) });
+      var grid = new World(3, 4, new HashSet<(int, int)> { (0, 0), (0, 1), (0, 2) });
       var expectedGrid = "XXX \n"
                        + "    \n"
                        + "    \n";
@@ -26,7 +26,7 @@ namespace Conways.Tests
     [Fact]
     public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
     {
-      var grid = new World(3, 3, new HashSet<RowColumn> { new RowColumn(2, 2) });
+      var grid = new World(3, 3, new HashSet<(int, int)> { new(2, 2) });
       var expectedInitialGrid = "   \n"
                        + "   \n"
                        + "  X\n";
@@ -44,7 +44,7 @@ namespace Conways.Tests
     [Fact]
     public void VisualAnyLiveCellWithMoreThanThreeLiveNeighboursDies()
     {
-      var grid = new World(3, 3, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0), new RowColumn(1, 1), new RowColumn(0, 2) });
+      var grid = new World(3, 3, new HashSet<(int, int)> { (0, 0), (0, 1), (1, 0), (1, 1), (0, 2) });
       var expectedInitialGrid = "XXX\n"
                              + "XX \n"
                              + "   \n";
@@ -60,7 +60,7 @@ namespace Conways.Tests
     [Fact]
     public void VisualAnyLiveCellWithThreeLiveNeighboursLives()
     {
-      var grid = new World(3, 3, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0), new RowColumn(1, 1) });
+      var grid = new World(3, 3, new HashSet<(int, int)> { (0, 0), (0, 1), (1, 0), (1, 1) });
       var expectedInitialGrid = "XX \n"
                               + "XX \n"
                               + "   \n";
@@ -72,7 +72,7 @@ namespace Conways.Tests
     [Fact]
     public void VisualAnyLiveCellWithTwoLiveNeighboursLivesAndADeadCellWithExactlyThreeLiveNeighboursBecomesLiveWithWrapping()
     {
-      var grid = new World(3, 3, new HashSet<RowColumn> { new RowColumn(0, 0), new RowColumn(0, 1), new RowColumn(1, 0) });
+      var grid = new World(3, 3, new HashSet<(int, int)> { (0, 0),(0, 1),(1, 0) });
       var expectedInitialGrid = "XX \n"
                               + "X  \n"
                               + "   \n";
