@@ -7,12 +7,12 @@ namespace Conways
   {
     public void Render(CellState[,] grid)
     {
-      // var header = "CONWAYS GAME OF LIFE";
-      // var footer = "~~~~~~~~~~~~~~~~~~~~";
+      var header = "CONWAYS GAME OF LIFE";
+      var footer = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
       Console.Clear();
-      // Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (header.Length / 2)) + "}", header));
+      Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (header.Length / 2)) + "}", header));
       Console.WriteLine(GridAsString(grid));
-      // Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (footer.Length / 2)) + "}", footer));
+      Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (footer.Length / 2)) + "}", footer));
 
     }
     public static string GridAsString(CellState[,] grid)

@@ -23,16 +23,16 @@ namespace Conways
     public CellState[,] GridClone() => _grid.Clone() as CellState[,];
     private void SetMany(IEnumerable<(int,int)> indexes, CellState value)
     {
-      foreach ((int,int) index in indexes)
-        _grid[index.Item1, index.Item2] = value;
+      foreach ((int Row,int Column) index in indexes)
+        _grid[index.Column, index.Column] = value;
     }
     public bool IsLive((int Row, int Column) index) => _grid[index.Row, index.Column].Equals(CellState.Alive);
     private IEnumerable<(int,int)> CellsToAlive()
     {
       var toAlive = new HashSet<(int,int)>();
-      for (int i = 0; i < (RowDimension); i++)
+      for (int i = 0; i < RowDimension; i++)
       {
-        for (int j = 0; j < (ColumnDimension); j++)
+        for (int j = 0; j < ColumnDimension; j++)
         {
           int liveCount = NeighbourHood.GetNeighbourIndexes((i,j), (this.RowDimension, this.ColumnDimension)).Where(IsLive).Count();
           if (liveCount == 3 || IsLive((i,j)) && liveCount == 2)
