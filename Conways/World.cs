@@ -9,7 +9,7 @@ namespace Conways
     private CellState[,] _grid;
     public int RowDimension => _grid.GetLength(0);
     public int ColumnDimension => _grid.GetLength(1);
-    public World(int rowDimension, int colDimension, IEnumerable<RowColumn> startingState)
+    public World(int rowDimension, int colDimension, IEnumerable<(int,int)> startingState)
     {
       _grid = new CellState[rowDimension, colDimension];
       SetMany(startingState, CellState.Alive);
@@ -21,24 +21,23 @@ namespace Conways
       SetMany(toAlive, CellState.Alive);
     }
     public CellState[,] GridClone() => _grid.Clone() as CellState[,];
-    private void SetMany(IEnumerable<RowColumn> indexes, CellState value)
+    private void SetMany(IEnumerable<(int,int)> indexes, CellState value)
     {
-      foreach (RowColumn index in indexes)
-        _grid[index.Row, index.Column] = value;
+      foreach ((int,int) index in indexes)
+        _grid[index.Item1, index.Item2] = value;
     }
-    public bool IsLive(RowColumn index) => _grid[index.Row, index.Column].Equals(CellState.Alive);
-    private IEnumerable<RowColumn> CellsToAlive()
+    public bool IsLive((int Row, int Column) index) => _grid[index.Row, index.Column].Equals(CellState.Alive);
+    private IEnumerable<(int,int)> CellsToAlive()
     {
-      var toAlive = new HashSet<RowColumn>();
+      var toAlive = new HashSet<(int,int)>();
       for (int i = 0; i < (RowDimension); i++)
       {
         for (int j = 0; j < (ColumnDimension); j++)
         {
-          var thisCell = new RowColumn(i, j);
-          int liveCount = NeighbourHood.GetNeighbourIndexes(thisCell, this.RowDimension, this.ColumnDimension).Where(IsLive).Count();
-          if (liveCount == 3 || IsLive(thisCell) && liveCount == 2)
+          int liveCount = NeighbourHood.GetNeighbourIndexes((i,j), (this.RowDimension, this.ColumnDimension)).Where(IsLive).Count();
+          if (liveCount == 3 || IsLive((i,j)) && liveCount == 2)
           {
-            toAlive.Add(thisCell);
+            toAlive.Add((i,j));
           }
         }
       }
