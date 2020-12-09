@@ -14,7 +14,7 @@ namespace Conways.Tests
                                  + "     \n"
                                  + "     \n";
 
-      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
 
       world.Tick();
 
@@ -26,11 +26,11 @@ namespace Conways.Tests
       Assert.True(world.IsLive((4, 1)));
 
 
-      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
 
       world.Tick();
 
-      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
     }
 
     [Fact]
@@ -43,7 +43,7 @@ namespace Conways.Tests
                                  + "  X  \n"
                                  + "     \n";
 
-      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
 
       world.Tick();
 
@@ -53,18 +53,17 @@ namespace Conways.Tests
                                  + "     \n"
                                  + "     \n";
 
-      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
 
       world.Tick();
 
-      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
     }
     [Fact]
     public void ReproducesGlider()
     {
       var world = new World(10, 10, new HashSet<(int, int)> { (0, 0), (1, 1), (1, 2), (2, 0), (2, 1) });
 
-      // var world = World(10, 10, HashSet<(int,int)> { (int,int)(0, 0), (int,int)(1, 1), (int,int)(1, 2), (int,int)(2, 0), (int,int)(2, 1) });
       var expectedFirstIteration = "X         \n"
                                  + " XX       \n"
                                  + "XX        \n"
@@ -75,7 +74,7 @@ namespace Conways.Tests
                                  + "          \n"
                                  + "          \n"
                                  + "          \n";
-      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
       world.Tick();
       var expectedSecondIteration = " X        \n"
                                   + "  X       \n"
@@ -87,7 +86,7 @@ namespace Conways.Tests
                                   + "          \n"
                                   + "          \n"
                                   + "          \n";
-      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
       world.Tick();
       var expectedThirdIteration = "          \n"
                                   + "X X       \n"
@@ -99,7 +98,7 @@ namespace Conways.Tests
                                   + "          \n"
                                   + "          \n"
                                   + "          \n";
-      Assert.Equal(expectedThirdIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedThirdIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
       world.Tick();
       var expectedFourthIteration = "          \n"
                                   + "  X       \n"
@@ -111,7 +110,7 @@ namespace Conways.Tests
                                   + "          \n"
                                   + "          \n"
                                   + "          \n";
-      Assert.Equal(expectedFourthIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedFourthIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
 
       world.Tick();
       var expectedFifthIteration = "          \n"
@@ -124,7 +123,7 @@ namespace Conways.Tests
                                   + "          \n"
                                   + "          \n"
                                   + "          \n";
-      Assert.Equal(expectedFifthIteration, ConsoleRenderer.GridAsString(world.GridClone()));
+      Assert.Equal(expectedFifthIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
     }
   }
 }

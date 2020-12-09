@@ -8,17 +8,18 @@ namespace Conways
     {
       var programLock = new object();
       Thread simulation = new Thread(() =>
-                {
-                  while (true)
-                  {
-                    Thread.Sleep(300);
-                    lock (programLock)
-                    {
-                      renderer.Render(world.GridClone());
-                      world.Tick();
-                    }
-                  }
-                }); simulation.Start();
+      {
+        while (true)
+        {
+          Thread.Sleep(300);
+          lock (programLock)
+          {
+            renderer.Render(world.CloneGrid());
+            world.Tick();
+          }
+        }
+      });
+      simulation.Start();
     }
   }
 }

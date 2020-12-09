@@ -26,17 +26,15 @@ namespace Conways
       }
     }
 
-    public IEnumerable<(int,int)> GetStartingState((int rowCount, int colCount) dimensions)
+    public ISet<(int,int)> GetStartingState((int rowCount, int colCount) dimensions)
     {
       var indexList = new HashSet<(int,int)>();
-
       while (true)
       {
         var input = ReadInput("enter indexes to set alive eg 0,0 0,1 0,2");
         var indexes = input.Split(" ");
         foreach (string index in indexes)
         {
-          var values = index.Split(",");
           var rowTryParse = int.TryParse(index[0].ToString(), out int row);
           var colTryParse = int.TryParse(index[2].ToString(), out int column);
           if (rowTryParse && colTryParse && row <= dimensions.rowCount - 1 && column <= dimensions.colCount - 1)

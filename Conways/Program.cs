@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Conways
+﻿namespace Conways
 {
   class Program
   {
