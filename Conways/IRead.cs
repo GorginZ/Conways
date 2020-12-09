@@ -2,6 +2,6 @@ namespace Conways
 {
     public interface IRead
     {
-         string ReadInput(string prompt);
+      string ReadInput(string prompt);
     }
 }

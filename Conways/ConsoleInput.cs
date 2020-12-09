@@ -29,7 +29,6 @@ namespace Conways
     public ISet<(int,int)> GetStartingState((int rowCount, int colCount) dimensions)
     {
       var indexList = new HashSet<(int,int)>();
-
       while (true)
       {
         var input = ReadInput("enter indexes to set alive eg 0,0 0,1 0,2");
