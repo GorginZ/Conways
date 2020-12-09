@@ -38,7 +38,6 @@ namespace Conways.Tests
                        + "   \n"
                        + "   \n";
       Assert.Equal(expectedPostTickGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
-
     }
 
     [Fact]
@@ -55,7 +54,6 @@ namespace Conways.Tests
                                    + "   \n";
 
       Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(grid.CloneGrid()));
-
     }
     [Fact]
     public void VisualAnyLiveCellWithThreeLiveNeighboursLives()
@@ -67,7 +65,6 @@ namespace Conways.Tests
       Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
       grid.Tick();
       Assert.Equal(expectedInitialGrid, ConsoleRenderer.GridAsString(grid.CloneGrid()));
-
     }
     [Fact]
     public void VisualAnyLiveCellWithTwoLiveNeighboursLivesAndADeadCellWithExactlyThreeLiveNeighboursBecomesLiveWithWrapping()
@@ -83,6 +80,5 @@ namespace Conways.Tests
                               + "XXX\n";
       Assert.Equal(expectedSecondIteration, ConsoleRenderer.GridAsString(grid.CloneGrid()));
     }
-
   }
 }
