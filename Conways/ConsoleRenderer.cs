@@ -5,6 +5,7 @@ namespace Conways
 {
   public class ConsoleRenderer : IRender
   {
+
     public void Render(CellState[,] grid)
     {
       const string header = "CONWAYS GAME OF LIFE";
@@ -14,6 +15,7 @@ namespace Conways
       Console.WriteLine(GridAsString(grid));
       Console.WriteLine(String.Format("{0," + ((Console.WindowWidth / 2) + (footer.Length / 2)) + "}", footer));
     }
+
     public static string GridAsString(CellState[,] grid)
     {
       var seeSB = new StringBuilder();

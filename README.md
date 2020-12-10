@@ -1,6 +1,114 @@
-# Conways
+# Conways Game of Life
+
+Conways Game of Life is a cellular automata game that has excited and inspired many people who may not have usually bee interested in maths theory and is a unmatched contribution to the sphere of maths theory.
+
+Read more about it and John Conway here:
+
+https://www.conwaylife.com/wiki/Conway%27s_Game_of_Life
+
+### Life is a system of complex behaviour based on very simple rules
+
+•Any live cell with fewer than two live neighbours dies, as if caused by underpopulation.
+
+•Any live cell with more than three live neighbours dies, as if by overcrowding.
+
+•Any live cell with two or three live neighbours lives on to the next generation.
+
+•Any dead cell with exactly three live neighbours becomes a live cell.
+
+
+
+Programmed solutions take place on a virtual grid world and the rules are applied at a discrete moment known as the 'tick'. 
+
+The initial state of the world is set and then the evolutions take place by repeatedly applying the rules.
+
+In this solution the grid is 'wrapped' around on both axis. 
+
+### Dependencies
+
+dotnet skd 5.0.100
+
+```
+brew cask install dotnet-sdk
+```
+
+check your dotnet version is 5.0.100 by running
+
+```
+dotnet --version
+```
+
+#### Set up
+
+```
+git clone git@github.com:GorginZ/Conways.git
+```
+
+change into the project directory
+
+```
+cd conways
+```
+
+build the project and it's dependencies:
+
+```
+dotnet build
+```
+
+#### To Run
+
+cd into main project
+
+```
+cd conways
+```
+
+and
+
+```
+dotnet run
+```
+
+
+
+User will be prompted for dimensions of the 'grid'/'world'
+
+and the initial starting state of live cells for the world
+
+
+
+<img src="docs/programInput.png">
+
+
+
+The simulation begins
+
+
+
+<img src="docs/simulation.png">
+
+### Planning
+
+The primary focus for this project was to create a very simple fast TDD solution to GOL. 
+
+As I introduced new functionality it was preceeded by unit tests. As more of the project came together I utilized integration tests and acceptance tests.
+
+
+The plan below is my original plan which contains elements no longer in my solution.
+
+I have removed components that I built to keep the solution as simple as possible - the RowColumn indexer struct was useful but I could achieve the same behaviour using value tuples.
+
+
+I initialy built a generic grid which would be a property on a world class - but this abstraction undermind my simple approach and I decided to keep the grid on the world as a 2d array.
+
+The neighbourhood class has also been absorbed into the World class. I feel there are strong arguments for it being abstracted but also see merrit in it being on the world especialy given it is such a small class.
+
+
 
 <img src="docs/plan.png">
+
+
 
 
 
@@ -31,7 +139,7 @@ Alternatives may be a public function on the world class that is identical - I w
 
 Another alternative is testing the behaviour of this methods side effects by looking at the results of the Tick();. This isn't ideal because I can't pinpoint if this fails as readily - and correct 'neighbour' calculation is a predicate for the application of all other business rules, so if this behaviour fails almost all other tests will - tests that are about OTHER things, like the application of the rules.
 
-So it sits out separately - perhaps now that I have completed with TDD it should come off, but I feel like there are some convincing benefits to abstracting it like this - it provides 'theoretical neighbours' based on the values put into it without exposing any other logic or data and is easily testable. 
+I have moved it into the world class but still feel compelled to defend the abstraction but think both are valid and will seek feedback on this as it is an interesting springboard to discuss abstraction.
 
 ```C#
 using System.Collections.Generic;
@@ -39,20 +147,16 @@ namespace Conways
 {
   public static class NeighbourHood
   {
-    public static IEnumerable<RowColumn> GetNeighbourIndexes(RowColumn index, int rowDim, int colDim)
+    public static ISet<int,int> GetNeighbourIndexes((int row,int column) index, int rowDim, int colDim)
     {
-      var row = index.Row;
-      var column = index.Column;
-      var left = column == 0 ? (colDim - 1) : (column - 1);
-      var right = column == (colDim - 1) ? (0) : (column + 1);
-      var up = row == 0 ? (rowDim - 1) : (row - 1);
-      var down = row == (rowDim - 1) ? (0) : (row + 1);
+  var left = index.column == 0 ? (ColumnDimension - 1) : (index.column - 1);
+      var right = index.column == (ColumnDimension - 1) ? (0) : (index.column + 1);
+      var up = index.row == 0 ? (RowDimension - 1) : (index.row - 1);
+      var down = index.row == (RowDimension - 1) ? (0) : (index.row + 1);
 
-      var neighbourHood = new HashSet<RowColumn>
-      {
-        new RowColumn(row, right), new RowColumn(row, left), new RowColumn(up, column), new RowColumn(down, column), new RowColumn(up, right), new RowColumn(up, left), new RowColumn(down, right), new RowColumn(down, left)
-      };
-      return neighbourHood;
+      var adjacentIndexes = new HashSet<(int, int)>{(index.row, right), (index.row, left),
+      (up, index.column), (down, index.column), (up, right), (up, left), (down, right), (down, left)};
+      return adjacentIndexes;
     }
   }
 }
@@ -71,13 +175,15 @@ unit testing is a great sprinboard to think about things like decoupling, depend
 for instance when I'm writing tests for how my console Renderer decides to render the data I need to think about the simplest way to give it that data and the simplest piece of data to test as a response. 
 
 
-Writing the tests is where I decided to make decisions about who would be responsible for how the grid is rendered. 
+Writing the tests is often where I decided to make more detailed decisions about who would be responsible for how the grid is rendered. 
 
 I decided I didn't want the world to be responsible for spitting out a grid as a string because the world as a domain is very succinct and explicit in what it does - it applies the tick rules, and providing the grid as a string is only ever going to be for rendering it in a console. So I don't want this logic in my world class.
 
 I made a IRender, which would take in a 'raw' grid and decide how to display that. The ConsoleRenderer takes in a Cellstate[,] and decides what to do with it. 
 
 taking in a cellstate is preferable to for instance the entire world - all it needs is the grid. But I also did not want to expose the grid unecessarily, so the world provides a clone of its grid.
+
+Writing tests that would show me visual data were a great place to make these decisions and an example of how a TDD aproach helped me to think about object design.
 
 
 
@@ -91,9 +197,7 @@ And a seperate integration type test which utilizes a 'real' grid.
 
 <img src="docs/gridClassDependent.png">
 
-I wrote tests for all my logic before I wrote the code. GOL is a great kata for TDD and presents a clear set of business rules and the TDD approach helped me make better design decisions as I worked through each problem in small bite sizes  and help me missing any details I might overlook from a big picture approach coming into it. 
-
-for instance I test the application of the 'rules' by checking the values in indexes in the grid in series of unit tests as well as visually - which also has the added benefit of being easier to understand while also testin how seperate components come together.
+These test are visual tests and integration tests as they test how parts of the application come together as a whole. I test the application of the 'rules' by checking the values in indexes in the grid in series of unit tests as well as visually - which also has the added benefit of being easier to understand while also testing how seperate components come together while I also test with 'numbers' elsewhere.
 
 #### Depenency Injection
 
@@ -106,11 +210,9 @@ It's single responsability is to run the simulation, similarly it should not nee
 
 I have done my best to keep my classes designed such that all of their dependencies are handed to them.
 
-My world is dependent on the neighbourhood's static GetNeighbourhod function, which is a design decision I am unsure about and want more opinions on. I understand when we write programs we are writing systems and sometimes depenencies are part of that and not necessarily bad - in this instance from a decoupling perspective it may be desirable to put this function on the world class itself - but the dependency isn't a particularly risky one, the neighbourhood class isn't a complex object that may fail - it's an abstraction to help make my code more testable and readable and a side effect of my TDD approach, so it stays for now.
+My world is/was dependent on the neighbourhood's static GetNeighbourhod function, which is a design decision I am unsure about and want more opinions on. I understand when we write programs we are writing systems and sometimes depenencies are part of that and not necessarily bad - in this instance from a decoupling perspective it may be desirable to put this function on the world class itself - but the dependency isn't a particularly risky one, the neighbourhood class isn't a complex object that may fail - it's an abstraction to help make my code more testable and readable and a side effect of my TDD approach, so it stays for now.
 
-
-
-removing dependencies on console
+removing dependencies on console by keeping all logic seperate from input.
 
 utilizing interfaces where appropriate to decouple the program from a explicitely console implementation, for instance all the set up arguments are returned from a ConsoleInput which implements IRead, which is passed into a world ready to go.
 

@@ -9,11 +9,13 @@ namespace Conways
     private CellState[,] _grid;
     public int RowDimension => _grid.GetLength(0);
     public int ColumnDimension => _grid.GetLength(1);
+
     public World(int rowDimension, int colDimension, ISet<(int, int)> startingState)
     {
       _grid = new CellState[rowDimension, colDimension];
       SetMany(startingState, CellState.Alive);
     }
+
     public void Tick()
     {
       var toAlive = GetCellsToMakeLiveNextIteration();
@@ -47,6 +49,7 @@ namespace Conways
       }
       return cellsToMakeLive;
     }
+
     private ISet<(int, int)> GetNeighbourIndexes((int row, int column) index)
     {
       var left = index.column == 0 ? (ColumnDimension - 1) : (index.column - 1);
