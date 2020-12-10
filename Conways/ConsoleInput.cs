@@ -11,40 +11,49 @@ namespace Conways
       Console.WriteLine(prompt);
       return Console.ReadLine();
     }
+
     public (int, int) GetDimensions()
     {
-      while (true)
+      var rowValue = 0;
+      var colValue = 0;
+      while (!IsValidDimension(rowValue) && !IsValidDimension(colValue))
       {
         var rowInput = ReadInput("How many rows?");
         var colInput = ReadInput("How many columns?");
-        var parsedRow = int.TryParse(rowInput, out int rowValue);
-        var parsedCol = int.TryParse(colInput, out int colValue);
-        if (parsedRow && parsedCol && IsValid(rowValue) && IsValid(colValue))
+        var parsedRow = int.TryParse(rowInput, out int rowOut);
+        var parsedCol = int.TryParse(colInput, out int colOut);
+        if (parsedRow && parsedCol && IsValidDimension(rowOut) && IsValidDimension(colOut))
         {
-          return (rowValue, colValue);
+          rowValue = rowOut;
+          colValue = colOut;
         }
       }
+      return (rowValue, colValue);
     }
 
-    public ISet<(int,int)> GetStartingState((int rowCount, int colCount) dimensions)
+    public static bool IsValidDimension(int value) => value <= 30 && value >= 3;
+
+    public ISet<(int, int)> GetStartingState((int rowCount, int colCount) dimensions)
     {
-      var indexList = new HashSet<(int,int)>();
-      while (true)
+      var indexList = new HashSet<(int, int)>();
+      while (indexList.Count < 3)
       {
         var input = ReadInput("enter indexes to set alive eg 0,0 0,1 0,2");
         var indexes = input.Split(" ");
         foreach (string index in indexes)
         {
-          var rowTryParse = int.TryParse(index[0].ToString(), out int row);
-          var colTryParse = int.TryParse(index[2].ToString(), out int column);
-          if (rowTryParse && colTryParse && row <= dimensions.rowCount - 1 && column <= dimensions.colCount - 1)
+          if (index.Length >= 3)
           {
-            indexList.Add((row, column));
+            var rowTryParse = int.TryParse(index[0].ToString(), out int row);
+            var colTryParse = int.TryParse(index[2].ToString(), out int column);
+            if (rowTryParse && colTryParse && row <= dimensions.rowCount - 1 && column <= dimensions.colCount - 1)
+            {
+              indexList.Add((row, column));
+            }
           }
         }
-        return indexList;
       }
+      return indexList;
     }
-    public static bool IsValid(int value) => value <= 50 && value >= 3;
   }
 }
