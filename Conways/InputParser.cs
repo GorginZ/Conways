@@ -23,6 +23,5 @@ namespace Conways
       }
       return indexList;
     }
-
   }
 }
