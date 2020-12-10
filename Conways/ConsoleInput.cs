@@ -33,27 +33,16 @@ namespace Conways
 
     public static bool IsValidDimension(int value) => value <= 30 && value >= 3;
 
-    public ISet<(int, int)> GetStartingState((int rowCount, int colCount) dimensions)
+    public ISet<(int, int)> GetValidIndexes((int rowCount, int colCount) dimensions)
     {
       var indexList = new HashSet<(int, int)>();
       while (indexList.Count < 3)
       {
         var input = ReadInput("enter indexes to set alive eg 0,0 0,1 0,2");
-        var indexes = input.Split(" ");
-        foreach (string index in indexes)
-        {
-          if (index.Length >= 3)
-          {
-            var rowTryParse = int.TryParse(index[0].ToString(), out int row);
-            var colTryParse = int.TryParse(index[2].ToString(), out int column);
-            if (rowTryParse && colTryParse && row <= dimensions.rowCount - 1 && column <= dimensions.colCount - 1)
-            {
-              indexList.Add((row, column));
-            }
-          }
-        }
+        indexList = new HashSet<(int, int)>(InputParser.ParseInputToValidIndexes(input, dimensions));
       }
       return indexList;
     }
+
   }
 }
