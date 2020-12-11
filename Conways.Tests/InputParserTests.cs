@@ -23,7 +23,7 @@ namespace Conways.Tests
     }
 
     [Fact]
-    public void WontParseDuplicatInputIndexes()
+    public void WontParseDuplicateInputIndexes()
     {
       var input = "0,0 0,0 0,0 3,3 3,3 3,3 2,2 2,2 2,2 2,2 2,2";
       var dimensions = (6, 6);
