@@ -40,7 +40,7 @@ namespace Conways
       {
         for (int col = 0; col < ColumnDimension; col++)
         {
-          int liveCount = GetNeighbourIndexes((row, col)).Count(IsLive);
+          int liveCount = AdjacentIndexCalculator.GetAdjacentIndexes((row, col), (RowDimension,ColumnDimension)).Count(IsLive);
           if (liveCount == 3 || (IsLive((row, col)) && liveCount == 2))
           {
             cellsToMakeLive.Add((row, col));
@@ -48,18 +48,6 @@ namespace Conways
         }
       }
       return cellsToMakeLive;
-    }
-
-    private ISet<(int, int)> GetNeighbourIndexes((int row, int column) index)
-    {
-      var left = index.column == 0 ? (ColumnDimension - 1) : (index.column - 1);
-      var right = index.column == (ColumnDimension - 1) ? (0) : (index.column + 1);
-      var up = index.row == 0 ? (RowDimension - 1) : (index.row - 1);
-      var down = index.row == (RowDimension - 1) ? (0) : (index.row + 1);
-
-      var adjacentIndexes = new HashSet<(int, int)>{(index.row, right), (index.row, left),
-      (up, index.column), (down, index.column), (up, right), (up, left), (down, right), (down, left)};
-      return adjacentIndexes;
     }
   }
 }
