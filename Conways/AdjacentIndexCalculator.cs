@@ -10,9 +10,8 @@ namespace Conways
       var up = index.row == 0 ? (dimensions.rowDimension - 1) : (index.row - 1);
       var down = index.row == (dimensions.rowDimension - 1) ? (0) : (index.row + 1);
 
-      var adjacentIndexes = new HashSet<(int, int)>{(index.row, right), (index.row, left),
+      return new HashSet<(int, int)>{(index.row, right), (index.row, left),
       (up, index.column), (down, index.column), (up, right), (up, left), (down, right), (down, left)};
-      return adjacentIndexes;
     }
   }
 }

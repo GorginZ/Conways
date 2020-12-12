@@ -30,6 +30,7 @@ namespace Conways.Tests
 
       Assert.Equal(expectedFirstIteration, ConsoleRenderer.GridAsString(world.CloneGrid()));
     }
+
     [Fact]
     public void CanProduceWrappedColumnBlinker()
     {
