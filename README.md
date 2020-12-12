@@ -28,9 +28,9 @@ In this solution the grid is 'wrapped' around on both axis.
 
 dotnet skd 5.0.100
 
-```
-brew cask install dotnet-sdk
-```
+Find how to install dotnet here:
+
+https://docs.microsoft.com/en-us/dotnet/core/install/how-to-detect-installed-versions?pivots=os-macos
 
 check your dotnet version is 5.0.100 by running
 
@@ -102,8 +102,6 @@ I have removed components that I built to keep the solution as simple as possibl
 
 I initialy built a generic grid which would be a property on a world class - but this abstraction undermind my simple approach and I decided to keep the grid on the world as a 2d array.
 
-The neighbourhood class has also been absorbed into the World class. I feel there are strong arguments for it being abstracted but also see merrit in it being on the world especialy given it is such a small class.
-
 
 
 <img src="docs/plan.png">
@@ -131,36 +129,13 @@ Is it a violation - by having a extra element?
 
 Maybe.
 
-I abstracted/created this NeighbourHood class as part of my TDD approach. I want my GOL to be simple, clear and testable. 
+I abstracted/created this NeighbourHood class as part of my TDD approach to building a modular and clear/testable solution. I want my GOL to be simple, clear and testable. 
 
 I didn't want to expose logic unecessarily on my world class - and a prerequisite for the main logic in the world class is locating neighbours of a cell.
 
 Alternatives may be a public function on the world class that is identical - I would be able to pinpoint if it spat out wrong indexes at the cost of exposing this logic.
 
 Another alternative is testing the behaviour of this methods side effects by looking at the results of the Tick();. This isn't ideal because I can't pinpoint if this fails as readily - and correct 'neighbour' calculation is a predicate for the application of all other business rules, so if this behaviour fails almost all other tests will - tests that are about OTHER things, like the application of the rules.
-
-I have moved it into the world class but still feel compelled to defend the abstraction but think both are valid and will seek feedback on this as it is an interesting springboard to discuss abstraction.
-
-```C#
-using System.Collections.Generic;
-namespace Conways
-{
-  public static class NeighbourHood
-  {
-    public static ISet<int,int> GetNeighbourIndexes((int row,int column) index, int rowDim, int colDim)
-    {
-  var left = index.column == 0 ? (ColumnDimension - 1) : (index.column - 1);
-      var right = index.column == (ColumnDimension - 1) ? (0) : (index.column + 1);
-      var up = index.row == 0 ? (RowDimension - 1) : (index.row - 1);
-      var down = index.row == (RowDimension - 1) ? (0) : (index.row + 1);
-
-      var adjacentIndexes = new HashSet<(int, int)>{(index.row, right), (index.row, left),
-      (up, index.column), (down, index.column), (up, right), (up, left), (down, right), (down, left)};
-      return adjacentIndexes;
-    }
-  }
-}
-```
 
 
 
@@ -175,9 +150,9 @@ unit testing is a great sprinboard to think about things like decoupling, depend
 for instance when I'm writing tests for how my console Renderer decides to render the data I need to think about the simplest way to give it that data and the simplest piece of data to test as a response. 
 
 
-Writing the tests is often where I decided to make more detailed decisions about who would be responsible for how the grid is rendered. 
+Writing the tests is often where I decided to make decisions about details.
 
-I decided I didn't want the world to be responsible for spitting out a grid as a string because the world as a domain is very succinct and explicit in what it does - it applies the tick rules, and providing the grid as a string is only ever going to be for rendering it in a console. So I don't want this logic in my world class.
+For instance while writing tests for visualizing the grid in the console I decided I didn't want the world to be responsible for spitting out a grid as a string because the world as a domain is very succinct and explicit in what it does - it applies the tick rules, and providing the grid as a string is only ever going to be for rendering it. So I don't want this logic in my world class, it would be giving it too many responsabilities.
 
 I made a IRender, which would take in a 'raw' grid and decide how to display that. The ConsoleRenderer takes in a Cellstate[,] and decides what to do with it. 
 
