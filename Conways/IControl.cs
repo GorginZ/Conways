@@ -5,5 +5,6 @@ namespace Conways
     ControlCommand Command { get; set; }
 
     void SetCurrentCommand();
+    void ReadCommand();
   }
 }
