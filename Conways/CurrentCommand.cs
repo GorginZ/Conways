@@ -6,6 +6,6 @@ namespace Conways
   {
   Running,
   Paused,
-  Quit
+  End
   }
 }

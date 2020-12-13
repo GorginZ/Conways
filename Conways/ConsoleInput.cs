@@ -6,7 +6,7 @@ namespace Conways
 {
   public class ConsoleInput : IRead, IControl
   {
-    private ConsoleKey InputKey { get; set; }
+    private ConsoleKey InputKey;
     public ControlCommand Command { get; set; }
 
     public string ReadInput(string prompt)
@@ -22,7 +22,7 @@ namespace Conways
       SetInputKey();
       if (InputKey == ConsoleKey.Escape)
       {
-        Command = ControlCommand.Quit;
+        Command = ControlCommand.End;
       }
       if (InputKey == ConsoleKey.Spacebar)
       {

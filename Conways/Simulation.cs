@@ -11,7 +11,7 @@ namespace Conways
 
       Thread setControlCommand = new Thread(() =>
         {
-          while (controller.Command != ControlCommand.Quit)
+          while (controller.Command != ControlCommand.End)
           {
             controller.SetCurrentCommand();
           }
@@ -19,7 +19,7 @@ namespace Conways
 
       Thread simulation = new Thread(() =>
       {
-        while (controller.Command != ControlCommand.Quit)
+        while (controller.Command != ControlCommand.End)
         {
           Thread.Sleep(300);
           lock (programLock)
