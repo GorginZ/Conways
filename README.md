@@ -1,6 +1,6 @@
 # Conways Game of Life
 
-Conways Game of Life is a cellular automata game that has excited and inspired many people who may not have usually bee interested in maths theory and is a unmatched contribution to the sphere of maths theory.
+Conways Game of Life is a cellular automaton game that has excited and inspired many people who may not have usually bee interested in maths theory and is a unmatched contribution to the sphere of maths theory.
 
 Read more about it and John Conway here:
 
