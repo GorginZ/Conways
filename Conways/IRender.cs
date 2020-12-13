@@ -2,6 +2,6 @@ namespace Conways
 {
   public interface IRender
   {
-    void Render(CellState[,] grid);
+    void Render(CellState[,] grid, ControlCommand currentCommand);
   }
 }
