@@ -99,8 +99,9 @@ The plan below is my original plan which contains elements no longer in my solut
 
 I have removed components that I built to keep the solution as simple as possible - the RowColumn indexer struct was useful but I could achieve the same behaviour using value tuples.
 
-
 I initialy built a generic grid which would be a property on a world class - but this abstraction undermind my simple approach and I decided to keep the grid on the world as a 2d array.
+
+### Initial Class Diagram
 
 
 
@@ -108,7 +109,9 @@ I initialy built a generic grid which would be a property on a world class - but
 
 
 
+### Class Diagram
 
+<img src="docs/classDiagram.png">
 
 #### Simplifying
 
@@ -117,25 +120,51 @@ My goal was to design and create a quick an simple solution to Conways Game of L
 GOL is a good candidit for following Four Rules of Simple Design
 
 - **Passes the tests**: Is functionally correct, verified through comprehensive automated tests.
+
 - **Reveals intention**: From the readers perspective the implementation is clear and unambiguous.
+
 - **No duplication**: Is a [DRY](https://en.wikipedia.org/wiki/Don't_repeat_yourself) implementation, with no duplicated logic.
+
 - **Fewest elements**: If the above 3 rules are met, any other elements of the design are superfluous and candidates for simplification.(1)
 
+  
+
+###### The Row Column Struct was a great candidate for the fourth rule.
+
+I wanted a type I could compare by value that would work well in sets and reflect the domain I'm working with but working with structs comes with some overheads.
 
 
-The below static class Neighbourhood might be a candidit for simplification (or elimination and amalgimation into the World class.)
 
-Is it a violation - by having a extra element?
+In the end I found what I needed using a value tuple and removed this all together.
 
-Maybe.
+```C#
+namespace Conways
+{
+  public readonly struct RowColumn
+  {
+    public readonly int Row;
+    public readonly int Column;
 
-I abstracted/created this NeighbourHood class as part of my TDD approach to building a modular and clear/testable solution. I want my GOL to be simple, clear and testable. 
+    public RowColumn(int row, int column)
+    {
+      Row = row;
+      Column = column;
+    }
+    public bool Equals(RowColumn other) => (Row, Column).Equals(other);
 
-I didn't want to expose logic unecessarily on my world class - and a prerequisite for the main logic in the world class is locating neighbours of a cell.
+    public override bool Equals(object obj)
+    {
+      if (!(obj is RowColumn rowCol))
+        return false;
+      return this.Row == rowCol.Row && this.Column == rowCol.Column;
+    }
+    public static bool operator ==(RowColumn a, RowColumn b) => a.Equals(b);
+    public static bool operator !=(RowColumn a, RowColumn b) => !a.Equals(b);
 
-Alternatives may be a public function on the world class that is identical - I would be able to pinpoint if it spat out wrong indexes at the cost of exposing this logic.
-
-Another alternative is testing the behaviour of this methods side effects by looking at the results of the Tick();. This isn't ideal because I can't pinpoint if this fails as readily - and correct 'neighbour' calculation is a predicate for the application of all other business rules, so if this behaviour fails almost all other tests will - tests that are about OTHER things, like the application of the rules.
+    public override int GetHashCode() => (Row, Column).GetHashCode();
+  }
+}
+```
 
 
 
