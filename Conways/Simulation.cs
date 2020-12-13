@@ -6,23 +6,26 @@ namespace Conways
   {
     public static void Run(IControl controller, IRender renderer, World world)
     {
-      var programLock = new object();
+      var controllerLock = new object();
 
       Thread setControlCommand = new Thread(() =>
         {
           while (controller.Command != ControlCommand.End)
           {
             controller.ReadCommand();
-            controller.SetCurrentCommand();
+            lock (controllerLock)
+            {
+              controller.SetCurrentCommand();
+            }
           }
         }); setControlCommand.Start();
 
-      Thread simulation = new Thread(() =>
+      Thread renderSimulation = new Thread(() =>
       {
         while (controller.Command != ControlCommand.End)
         {
           Thread.Sleep(300);
-          lock (programLock)
+          lock (controllerLock)
           {
             renderer.Render(world.CloneGrid(), controller.Command);
             if (controller.Command == ControlCommand.Running)
@@ -32,7 +35,7 @@ namespace Conways
           }
         }
       });
-      simulation.Start();
+      renderSimulation.Start();
     }
   }
 }
