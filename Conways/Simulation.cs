@@ -12,6 +12,7 @@ namespace Conways
         {
           while (controller.Command != ControlCommand.End)
           {
+            controller.ReadCommand();
             controller.SetCurrentCommand();
           }
         }); setControlCommand.Start();

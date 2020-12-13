@@ -7,9 +7,10 @@ namespace Conways
     public ControlCommand Command { get; set; }
     public void SetInputKey() => InputKey = Console.ReadKey(true).Key;
 
+    public void ReadCommand() => SetInputKey();
+
     public void SetCurrentCommand()
     {
-      SetInputKey();
       if (InputKey == ConsoleKey.Escape)
       {
         Command = ControlCommand.End;
