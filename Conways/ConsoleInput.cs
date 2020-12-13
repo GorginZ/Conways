@@ -4,12 +4,30 @@ using System.Text.RegularExpressions;
 
 namespace Conways
 {
-  public class ConsoleInput : IRead
+  public class ConsoleInput : IRead, IControl
   {
+    private ConsoleKey InputKey { get; set; }
+    public ControlCommand Command { get; set; }
+
     public string ReadInput(string prompt)
     {
       Console.WriteLine(prompt);
       return Console.ReadLine();
+    }
+
+    public void SetInputKey() => InputKey = Console.ReadKey(true).Key;
+
+    public void SetCurrentCommand()
+    {
+      SetInputKey();
+      if (InputKey == ConsoleKey.Escape)
+      {
+        Command = ControlCommand.Quit;
+      }
+      if (InputKey == ConsoleKey.Spacebar)
+      {
+        Command = Command == ControlCommand.Running ? ControlCommand.Paused : ControlCommand.Running;
+      }
     }
 
     public (int, int) GetDimensions()

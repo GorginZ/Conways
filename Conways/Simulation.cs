@@ -1,21 +1,34 @@
+using System;
 using System.Threading;
 
 namespace Conways
 {
   public static class Simulation
   {
-    public static void Run(IRender renderer, World world)
+    public static void Run(IControl controller, IRender renderer, World world)
     {
       var programLock = new object();
+
+      Thread setControlCommand = new Thread(() =>
+        {
+          while (controller.Command != ControlCommand.Quit)
+          {
+            controller.SetCurrentCommand();
+          }
+        }); setControlCommand.Start();
+
       Thread simulation = new Thread(() =>
       {
-        while (true)
+        while (controller.Command != ControlCommand.Quit)
         {
           Thread.Sleep(300);
           lock (programLock)
           {
-            renderer.Render(world.CloneGrid());
-            world.Tick();
+            renderer.Render(world.CloneGrid(), controller.Command);
+            if (controller.Command == ControlCommand.Running)
+            {
+              world.Tick();
+            }
           }
         }
       });
