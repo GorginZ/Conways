@@ -1,33 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace Conways
 {
-  public class ConsoleInput : IRead, IControl
+  public class ConsoleInput : IRead
   {
-    private ConsoleKey InputKey;
-    public ControlCommand Command { get; set; }
-
     public string ReadInput(string prompt)
     {
       Console.WriteLine(prompt);
       return Console.ReadLine();
-    }
-
-    public void SetInputKey() => InputKey = Console.ReadKey(true).Key;
-
-    public void SetCurrentCommand()
-    {
-      SetInputKey();
-      if (InputKey == ConsoleKey.Escape)
-      {
-        Command = ControlCommand.End;
-      }
-      if (InputKey == ConsoleKey.Spacebar)
-      {
-        Command = Command == ControlCommand.Running ? ControlCommand.Paused : ControlCommand.Running;
-      }
     }
 
     public (int, int) GetDimensions()
