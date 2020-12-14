@@ -1,4 +1,3 @@
-
 namespace Conways
 {
   public enum ControlCommand

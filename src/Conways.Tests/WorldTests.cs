@@ -18,9 +18,7 @@ namespace Conways.Tests
     [Fact]
     public void CanSetCellsAlive()
     {
-      var grid = new World(3, 4, new HashSet<(int, int)> { (0, 0) }
-
-      );
+      var grid = new World(3, 4, new HashSet<(int, int)> { (0, 0) });
       Assert.True(grid.IsLive((0, 0)));
     }
 
