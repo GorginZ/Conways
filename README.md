@@ -47,6 +47,7 @@ git clone git@github.com:GorginZ/Conways.git
 change into the project directory
 
 ```
+cd src
 cd conways
 ```
 
@@ -58,13 +59,19 @@ dotnet build
 
 #### To Run
 
-cd into main project
+cd into src
+
+```
+cd src
+```
+
+CD into main project
 
 ```
 cd conways
 ```
 
-and
+And
 
 ```
 dotnet run
