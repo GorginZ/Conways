@@ -37,18 +37,22 @@ namespace Conways
       var cellsToMakeLive = new HashSet<(int, int)>();
       for (int row = 0; row < RowDimension; row++)
       {
-        for (int col = 0; col < ColumnDimension; col++)
+        for (int column = 0; column < ColumnDimension; column++)
         {
-          var liveCount = GetNumberOfLiveNeighboursForThisCell(row, col);
-          if (liveCount == 3 || (IsLive((row, col)) && liveCount == 2))
+          var indexOfCell = (row, column);
+          if (CellShouldBeMadeLive(indexOfCell))
           {
-            cellsToMakeLive.Add((row, col));
+            cellsToMakeLive.Add((row, column));
           }
         }
       }
       return cellsToMakeLive;
     }
-
-    private int GetNumberOfLiveNeighboursForThisCell(int row, int col) => AdjacentIndexCalculator.GetAdjacentIndexes((row, col), (RowDimension, ColumnDimension)).Count(IsLive);
+    private bool CellShouldBeMadeLive((int row, int column) indexOfCell)
+    {
+      var numberOfLiveNeighbours = GetNumberOfLiveNeighboursForThisCell(indexOfCell);
+      return numberOfLiveNeighbours == 3 || (IsLive(indexOfCell) && numberOfLiveNeighbours == 2);
+    }
+    private int GetNumberOfLiveNeighboursForThisCell((int row, int column) indexOfCell) => AdjacentIndexCalculator.GetAdjacentIndexes(indexOfCell, (RowDimension, ColumnDimension)).Count(IsLive);
   }
 }

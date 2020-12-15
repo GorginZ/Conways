@@ -10,8 +10,16 @@ namespace Conways
       var up = index.row == 0 ? (dimensions.rowDimension - 1) : (index.row - 1);
       var down = index.row == (dimensions.rowDimension - 1) ? (0) : (index.row + 1);
 
-      return new HashSet<(int, int)>{(index.row, right), (index.row, left),
-      (up, index.column), (down, index.column), (up, right), (up, left), (down, right), (down, left)};
+      var rightNeighbour = (index.row, right);
+      var leftNeighbour = (index.row, left);
+      var upNeighbour = (up, index.column);
+      var downNeighbour = (down, index.column);
+      var rightUpDiagonal = (up, right);
+      var leftUpDiagonal = (up, left);
+      var lowerRightDiagonal = (down, right);
+      var lowerLeftDiagonal = (down, left);
+
+      return new HashSet<(int, int)>{upNeighbour, rightUpDiagonal, rightNeighbour, lowerRightDiagonal, downNeighbour, lowerLeftDiagonal, leftNeighbour, leftUpDiagonal};
     }
   }
 }
