@@ -37,18 +37,41 @@ namespace Conways
       var cellsToMakeLive = new HashSet<(int, int)>();
       for (int row = 0; row < RowDimension; row++)
       {
-        for (int col = 0; col < ColumnDimension; col++)
+        for (int column = 0; column < ColumnDimension; column++)
         {
-          var liveCount = GetNumberOfLiveNeighboursForThisCell(row, col);
-          if (liveCount == 3 || (IsLive((row, col)) && liveCount == 2))
+          var indexOfCell = (row, column);
+          if (CellShouldBeMadeLive(indexOfCell))
           {
-            cellsToMakeLive.Add((row, col));
+            cellsToMakeLive.Add((row, column));
           }
         }
       }
       return cellsToMakeLive;
     }
+    private bool CellShouldBeMadeLive((int row, int column) indexOfCell)
+    {
+      var numberOfLiveNeighbours = GetNumberOfLiveNeighboursForThisCell(indexOfCell);
+      return numberOfLiveNeighbours == 3 || (IsLive(indexOfCell) && numberOfLiveNeighbours == 2);
+    }
+    private int GetNumberOfLiveNeighboursForThisCell((int row, int column) indexOfCell) => GetAdjacentIndexes(indexOfCell).Count(IsLive);
 
-    private int GetNumberOfLiveNeighboursForThisCell(int row, int col) => AdjacentIndexCalculator.GetAdjacentIndexes((row, col), (RowDimension, ColumnDimension)).Count(IsLive);
+    private ISet<(int, int)> GetAdjacentIndexes((int row, int column) index)
+    {
+      var left = index.column == 0 ? (ColumnDimension - 1) : (index.column - 1);
+      var right = index.column == (ColumnDimension - 1) ? (0) : (index.column + 1);
+      var up = index.row == 0 ? (RowDimension - 1) : (index.row - 1);
+      var down = index.row == (RowDimension - 1) ? (0) : (index.row + 1);
+
+      var rightNeighbour = (index.row, right);
+      var leftNeighbour = (index.row, left);
+      var upNeighbour = (up, index.column);
+      var downNeighbour = (down, index.column);
+      var rightUpDiagonal = (up, right);
+      var leftUpDiagonal = (up, left);
+      var lowerRightDiagonal = (down, right);
+      var lowerLeftDiagonal = (down, left);
+
+      return new HashSet<(int, int)>{upNeighbour, rightUpDiagonal, rightNeighbour, lowerRightDiagonal, downNeighbour, lowerLeftDiagonal, leftNeighbour, leftUpDiagonal};
+    }
   }
 }

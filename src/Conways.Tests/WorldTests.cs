@@ -9,77 +9,77 @@ namespace Conways.Tests
     [Fact]
     public void GridIsOfSpecifiedDimensions()
     {
-      var grid = new World(3, 4, new HashSet<(int, int)>());
+      var world = new World(3, 4, new HashSet<(int, int)>());
 
-      Assert.Equal(3, grid.RowDimension);
-      Assert.Equal(4, grid.ColumnDimension);
+      Assert.Equal(3, world.RowDimension);
+      Assert.Equal(4, world.ColumnDimension);
     }
 
     [Fact]
     public void CanSetCellsAlive()
     {
-      var grid = new World(3, 4, new HashSet<(int, int)> { (0, 0) });
-      Assert.True(grid.IsLive((0, 0)));
+      var world = new World(3, 4, new HashSet<(int, int)> { (0, 0) });
+      Assert.True(world.IsLive((0, 0)));
     }
 
     [Fact]
     public void AnyLiveCellWithFewerThanTwoLiveNeighboursDies()
     {
-      var grid = new World(3, 3, new HashSet<(int, int)> { (0, 0) });
+      var world = new World(3, 3, new HashSet<(int, int)> { (0, 0) });
 
-      Assert.True(grid.IsLive((0, 0)));
+      Assert.True(world.IsLive((0, 0)));
 
-      grid.Tick();
+      world.Tick();
 
-      Assert.False(grid.IsLive((0, 0)));
+      Assert.False(world.IsLive((0, 0)));
     }
 
     [Fact]
     public void AnyLiveCellWithMoreThanThreeLiveNeighboursDies()
     {
-      var grid = new World(3, 3, new HashSet<(int, int)> { (0, 0), (0, 1), (1, 0), (1, 1), (0, 2) });
+      var world = new World(3, 3, new HashSet<(int, int)> { (0, 0), (0, 1), (1, 0), (1, 1), (0, 2) });
 
-      Assert.True(grid.IsLive((0, 0)));
+      Assert.True(world.IsLive((0, 0)));
 
-      grid.Tick();
+      world.Tick();
 
-      Assert.False(grid.IsLive((0, 0)));
+      Assert.False(world.IsLive((0, 0)));
     }
 
     [Fact]
     public void AnyLiveCellWithThreeLiveNeighboursLives()
     {
-      var grid = new World(3, 3, new HashSet<(int, int)> { (0, 0), (0, 1), (1, 0), (1, 1) });
+      var world = new World(3, 3, new HashSet<(int, int)> { (0, 0), (0, 1), (1, 0), (1, 1) });
 
-      Assert.True(grid.IsLive((0, 0)));
+      Assert.True(world.IsLive((0, 0)));
 
-      grid.Tick();
+      world.Tick();
 
-      Assert.True(grid.IsLive((0, 0)));
+      Assert.True(world.IsLive((0, 0)));
     }
 
     [Fact]
     public void AnyLiveCellWithTwoLiveNeighboursLives()
     {
-      var grid = new World(3, 3, new HashSet<(int, int)> { new(0, 0),(0, 1),(1, 0) });
+      var world = new World(3, 3, new HashSet<(int, int)> { new(0, 0),(0, 1),(1, 0) });
 
-      Assert.True(grid.IsLive((0, 0)));
+      Assert.True(world.IsLive((0, 0)));
 
-      grid.Tick();
+      world.Tick();
 
-      Assert.True(grid.IsLive((0, 0)));
+      Assert.True(world.IsLive((0, 0)));
     }
 
     [Fact]
     public void AnyDeadCellWithExactlyThreeLiveNeighboursBecomesALiveCell()
     {
-      var grid = new World(3, 3, new HashSet<(int, int)> { (0, 0), (0, 1), (1, 0) });
+      var world = new World(3, 3, new HashSet<(int, int)> { (0, 0), (0, 1), (1, 0) });
 
-      Assert.False(grid.IsLive((1, 1)));
+      Assert.False(world.IsLive((1, 1)));
 
-      grid.Tick();
+      world.Tick();
 
-      Assert.True(grid.IsLive((1, 1)));
+      Assert.True(world.IsLive((1, 1)));
     }
   }
 }
