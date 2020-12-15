@@ -53,6 +53,25 @@ namespace Conways
       var numberOfLiveNeighbours = GetNumberOfLiveNeighboursForThisCell(indexOfCell);
       return numberOfLiveNeighbours == 3 || (IsLive(indexOfCell) && numberOfLiveNeighbours == 2);
     }
-    private int GetNumberOfLiveNeighboursForThisCell((int row, int column) indexOfCell) => AdjacentIndexCalculator.GetAdjacentIndexes(indexOfCell, (RowDimension, ColumnDimension)).Count(IsLive);
+    private int GetNumberOfLiveNeighboursForThisCell((int row, int column) indexOfCell) => GetAdjacentIndexes(indexOfCell).Count(IsLive);
+
+    private ISet<(int, int)> GetAdjacentIndexes((int row, int column) index)
+    {
+      var left = index.column == 0 ? (ColumnDimension - 1) : (index.column - 1);
+      var right = index.column == (ColumnDimension - 1) ? (0) : (index.column + 1);
+      var up = index.row == 0 ? (RowDimension - 1) : (index.row - 1);
+      var down = index.row == (RowDimension - 1) ? (0) : (index.row + 1);
+
+      var rightNeighbour = (index.row, right);
+      var leftNeighbour = (index.row, left);
+      var upNeighbour = (up, index.column);
+      var downNeighbour = (down, index.column);
+      var rightUpDiagonal = (up, right);
+      var leftUpDiagonal = (up, left);
+      var lowerRightDiagonal = (down, right);
+      var lowerLeftDiagonal = (down, left);
+
+      return new HashSet<(int, int)>{upNeighbour, rightUpDiagonal, rightNeighbour, lowerRightDiagonal, downNeighbour, lowerLeftDiagonal, leftNeighbour, leftUpDiagonal};
+    }
   }
 }
