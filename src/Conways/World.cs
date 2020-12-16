@@ -6,13 +6,15 @@ namespace Conways
   public class World
   {
     private CellState[,] _grid;
+    private readonly IRules _rules;
     public int RowDimension => _grid.GetLength(0);
     public int ColumnDimension => _grid.GetLength(1);
 
-    public World(int rowDimension, int colDimension, ISet<(int, int)> startingState)
+    public World(int rowDimension, int colDimension, ISet<(int, int)> startingState, IRules rules)
     {
       _grid = new CellState[rowDimension, colDimension];
       SetMany(startingState, CellState.Alive);
+      _rules = rules;
     }
 
     public void Tick()
@@ -48,30 +50,34 @@ namespace Conways
       }
       return cellsToMakeLive;
     }
-    private bool CellShouldBeMadeLive((int row, int column) indexOfCell)
+    private bool CellShouldBeMadeLive((int row, int column) indexofCell)
     {
-      var numberOfLiveNeighbours = GetNumberOfLiveNeighboursForThisCell(indexOfCell);
-      return numberOfLiveNeighbours == 3 || (IsLive(indexOfCell) && numberOfLiveNeighbours == 2);
+      var numberOfLiveNeighbours = _rules.CellNeighbours(indexofCell, (RowDimension, ColumnDimension)).Count(IsLive);
+      return _rules.CellShouldBeMadeLiveNextItteration(IsLive(indexofCell), numberOfLiveNeighbours);
     }
-    private int GetNumberOfLiveNeighboursForThisCell((int row, int column) indexOfCell) => GetAdjacentIndexes(indexOfCell).Count(IsLive);
+    // private bool CellShouldBeMadeLive((int row, int column) indexOfCell)
+    // {
+    //   var numberOfLiveNeighbours = GetAdjacentIndexes(indexOfCell).Count(IsLive);
+    //   return numberOfLiveNeighbours == 3 || (IsLive(indexOfCell) && numberOfLiveNeighbours == 2);
+    // }
 
-    private ISet<(int, int)> GetAdjacentIndexes((int row, int column) index)
-    {
-      var left = index.column == 0 ? (ColumnDimension - 1) : (index.column - 1);
-      var right = index.column == (ColumnDimension - 1) ? (0) : (index.column + 1);
-      var up = index.row == 0 ? (RowDimension - 1) : (index.row - 1);
-      var down = index.row == (RowDimension - 1) ? (0) : (index.row + 1);
+    // private ISet<(int, int)> GetAdjacentIndexes((int row, int column) index)
+    // {
+    //   var left = index.column == 0 ? (ColumnDimension - 1) : (index.column - 1);
+    //   var right = index.column == (ColumnDimension - 1) ? (0) : (index.column + 1);
+    //   var up = index.row == 0 ? (RowDimension - 1) : (index.row - 1);
+    //   var down = index.row == (RowDimension - 1) ? (0) : (index.row + 1);
 
-      var rightNeighbour = (index.row, right);
-      var leftNeighbour = (index.row, left);
-      var upNeighbour = (up, index.column);
-      var downNeighbour = (down, index.column);
-      var rightUpDiagonal = (up, right);
-      var leftUpDiagonal = (up, left);
-      var lowerRightDiagonal = (down, right);
-      var lowerLeftDiagonal = (down, left);
+    //   var rightNeighbour = (index.row, right);
+    //   var leftNeighbour = (index.row, left);
+    //   var upNeighbour = (up, index.column);
+    //   var downNeighbour = (down, index.column);
+    //   var rightUpDiagonal = (up, right);
+    //   var leftUpDiagonal = (up, left);
+    //   var lowerRightDiagonal = (down, right);
+    //   var lowerLeftDiagonal = (down, left);
 
-      return new HashSet<(int, int)>{upNeighbour, rightUpDiagonal, rightNeighbour, lowerRightDiagonal, downNeighbour, lowerLeftDiagonal, leftNeighbour, leftUpDiagonal};
-    }
+    //   return new HashSet<(int, int)> { upNeighbour, rightUpDiagonal, rightNeighbour, lowerRightDiagonal, downNeighbour, lowerLeftDiagonal, leftNeighbour, leftUpDiagonal };
+    // }
   }
 }

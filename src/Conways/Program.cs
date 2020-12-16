@@ -9,7 +9,8 @@
       var renderer = new ConsoleRenderer();
       var dimensions = userInput.GetDimensions();
       var indexes = userInput.GetValidIndexes(dimensions);
-      var world = new World(dimensions.Item1, dimensions.Item2, indexes);
+      var rules = new LifeRules();
+      var world = new World(dimensions.Item1, dimensions.Item2, indexes, rules);
       Simulation.Run(controller, renderer, world);
     }
   }
